@@ -1,13 +1,15 @@
+const { validateToken } = require("../services/authenticatin");
+
 function checkForAuthenticationCookie(cookieName){
     return (req,res,next)=>{
-        const tokenCookieValue = requestAnimationFrame.cookies[cookieName]
+        const tokenCookieValue = req.cookies[cookieName];
         if(!tokenCookieValue){
             next();
 
         }
         try{
 
-            const userPayload = vallidateToken(tokenCookieValue);
+            const userPayload = validateToken(tokenCookieValue);
             req.user = userPayload;
 
         
@@ -16,4 +18,8 @@ function checkForAuthenticationCookie(cookieName){
         }
         next();
     }
+}
+module.exports = {
+    checkForAuthenticationCookie,
+    
 }
